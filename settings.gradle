@@ -1,0 +1,2 @@
+include ':app', ':common', ':customerview'
+rootProject.name='MVVMDemo'
