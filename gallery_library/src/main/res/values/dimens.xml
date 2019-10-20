@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Default screen margins, per the Android Design guidelines. -->
+    <!-- 注意:添加必须写明注释 -->
+
+
+    <!--线条-->
+    <dimen name="line_bg_height_lib">0.7dp</dimen>
+    <!-- 项目组建相隔高度 -->
+    <dimen name="app_margin_lib">8dp</dimen>
+    <dimen name="app_margin_double_lib">16dp</dimen>
+    <dimen name="title_height_lib">56dp</dimen>
+    <dimen name="radius_sharp_lib">5dp</dimen>
+
+</resources>

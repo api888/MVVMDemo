@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">gallery_library</string>
+
+    <string name="cancel">取消</string>
+    <string name="save">保存</string>
+    <string name="complete">完成</string>
+
+    <string name="over_image_num">超过图片选择上限</string>
+
+    <string name="no_sdcard">没有SD卡</string>
+</resources>
