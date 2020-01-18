@@ -1,13 +1,17 @@
 package com.codepig.common.util;
 
 import android.content.Context;
+import android.content.Intent;
 import android.graphics.Bitmap;
 import android.media.MediaMetadataRetriever;
+import android.media.ThumbnailUtils;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
+
+import com.codepig.common.bean.MediaInfo;
 
 import java.io.File;
 import java.io.FileNotFoundException;
@@ -76,7 +80,7 @@ public class MediaUtil {
         else
             //本地视频
             mmr.setDataSource(path);
-        Bitmap bitmap = mmr.getFrameAtTime();
+        Bitmap bitmap = mmr.getFrameAtTime(0);
         //保存图片
         File f = getOutputMediaFile(MEDIA_TYPE_IMAGE);
         if (f.exists()) {
@@ -94,6 +98,97 @@ public class MediaUtil {
         }
         mmr.release();
         return f.getAbsolutePath();
+    }
+
+    /**
+     * 获取第一帧截图
+     * @param videoPath
+     * @return
+     */
+    public static Bitmap getBitmapForVideo(String videoPath) {
+        try {
+            MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+            String path = videoPath;
+            if (path.startsWith("http"))
+                //获取网络视频第一帧图片
+                mmr.setDataSource(path, new HashMap());
+            else
+                //本地视频
+                mmr.setDataSource(path);
+            Bitmap bitmap = mmr.getFrameAtTime(0);//截图位置的微秒数
+            return bitmap;
+        }catch (Exception e){
+            return null;
+        }
+    }
+
+    /**
+     * 获取分辨率
+     */
+    public static int[] getVideoSize(String videoPath){
+        int[] vSize=new int[2];
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        try {
+            if (videoPath != null)
+            {
+                if (videoPath.startsWith("http"))
+                    //网络视频
+                    mmr.setDataSource(videoPath, new HashMap());
+                else
+                    //本地视频
+                    mmr.setDataSource(videoPath);
+            }
+//            String duration = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION);//时长(毫秒)
+            vSize[0] = Integer.parseInt(mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH));//宽
+            vSize[1] = Integer.parseInt(mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT));//高
+        } catch (Exception ex)
+        {
+            return null;
+        } finally {
+            mmr.release();
+        }
+
+        return vSize;
+    }
+
+    /**
+     * 获取码率
+     * @param videoPath
+     * @return
+     */
+    public static String getBitrate(String videoPath) {
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        try {
+            String path = videoPath;
+            if (path.startsWith("http"))
+                //获取网络视频第一帧图片
+                mmr.setDataSource(path, new HashMap());
+            else
+                //本地视频
+                mmr.setDataSource(path);
+            return mmr.extractMetadata(MediaMetadataRetriever.METADATA_KEY_BITRATE);
+        }catch (Exception e){
+            return null;
+        } finally {
+            mmr.release();
+        }
+    }
+
+    public static Bitmap getBitmapForVideo(String videoPath,long _t) {
+        try {
+            MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+            String path = videoPath;
+            if (path.startsWith("http"))
+                //获取网络视频第一帧图片
+                mmr.setDataSource(path, new HashMap());
+            else
+                //本地视频
+                mmr.setDataSource(path);
+            Bitmap bitmap = mmr.getFrameAtTime(_t);//截图位置的微秒数
+            return bitmap;
+        }catch (Exception e){
+            return null;
+        }
     }
 
     /**
@@ -121,7 +216,7 @@ public class MediaUtil {
             else
                 //本地视频
                 mmr.setDataSource(path);
-            Bitmap bitmap = mmr.getFrameAtTime();
+            Bitmap bitmap = mmr.getFrameAtTime(0);
             //保存图片
             File f = getOutputMediaFile(MEDIA_TYPE_IMAGE);
             if (f.exists()) {
@@ -152,5 +247,66 @@ public class MediaUtil {
 
     public interface OnLoadVideoImageListener {
         void onLoadImage(File file);
+    }
+
+    /**
+     * 获取视频信息
+     * @param mUri
+     */
+    public static MediaInfo getMp4Info(String mUri){
+        MediaMetadataRetriever mmr = new MediaMetadataRetriever();
+        try {
+            mmr.setDataSource(mUri);
+
+            String duration = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_DURATION);//时长(毫秒)
+            String width = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_WIDTH);//宽
+            String height = mmr.extractMetadata(android.media.MediaMetadataRetriever.METADATA_KEY_VIDEO_HEIGHT);//高
+
+            MediaInfo mediaInfo=new MediaInfo();
+            mediaInfo.setDuration(duration);
+            mediaInfo.setHeight(height);
+            mediaInfo.setWidth(width);
+            return mediaInfo;
+        } catch (Exception ex) {
+            return null;
+        } finally {
+            mmr.release();
+        }
+    }
+
+    /**
+     * 保存图片到相册
+     */
+    public static File saveImageToGallery(Context context,Bitmap bitmap){
+        // 首先保存图片
+        String storePath = Environment.getExternalStorageDirectory().getAbsolutePath() + File.separator + "com.everyone.share";
+        File appDir = new File(storePath);
+        if (!appDir.exists()) {
+            appDir.mkdir();
+        }
+        String fileName = System.currentTimeMillis() + ".jpg";
+        File file = new File(appDir, fileName);
+        try {
+            FileOutputStream fos = new FileOutputStream(file);
+            //通过io流的方式来压缩保存图片
+            boolean isSuccess = bitmap.compress(Bitmap.CompressFormat.JPEG, 60, fos);
+            fos.flush();
+            fos.close();
+
+            //把文件插入到系统图库
+            //MediaStore.Images.Media.insertImage(context.getContentResolver(), file.getAbsolutePath(), fileName, null);
+
+            //保存图片后发送广播通知更新数据库
+            Uri uri = Uri.fromFile(file);
+            context.sendBroadcast(new Intent(Intent.ACTION_MEDIA_SCANNER_SCAN_FILE, uri));
+            if (isSuccess) {
+                return file;
+            } else {
+                return null;
+            }
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
     }
 }

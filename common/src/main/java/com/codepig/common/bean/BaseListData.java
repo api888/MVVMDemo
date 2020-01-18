@@ -11,21 +11,21 @@ import java.util.List;
 public final class BaseListData<T> extends Base {
     private String count;
 
-    private List<T> data;
+    private List<T> respData;
 
     public BaseListData() {
     }
 
     public BaseListData(List<T> data) {
-        this.data = data;
+        this.respData = data;
     }
 
     public List<T> getData() {
-        return data == null ? new ArrayList<T>() : data;
+        return respData == null ? new ArrayList<T>() : respData;
     }
 
     public void setData(List<T> data) {
-        this.data = data;
+        this.respData = data;
     }
 
     public String getCount() {

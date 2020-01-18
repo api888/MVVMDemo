@@ -6,7 +6,7 @@ import com.codepig.common.callback.WebViewCB;
 import com.codepig.common.config.IntentConfig;
 
 
-public class WebViewVM extends BaseVM {
+public class WebViewVM extends BaseVM{
     private WebViewCB cb;
     private String link;
     /**

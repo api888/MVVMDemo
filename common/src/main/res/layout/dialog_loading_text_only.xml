@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/rootLayout"
+    android:layout_margin="40dp"
+    android:elevation="2dp"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:background="@color/trans_white2">
+    <ImageView
+        android:src="@mipmap/alert_angle"
+        android:layout_width="19dp"
+        android:layout_height="19dp" />
+    <ImageView
+        android:src="@mipmap/alert_angle"
+        android:layout_alignBottom="@+id/messageText"
+        android:layout_alignRight="@+id/messageText"
+        android:rotation="180"
+        android:layout_width="19dp"
+        android:layout_height="19dp" />
+
+    <TextView
+        android:id="@+id/messageText"
+        android:text="加载中…"
+        android:gravity="center"
+        android:padding="13dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/text_dark"
+        android:minHeight="40dp"
+        android:minWidth="150dp"
+        android:textSize="15dp" />
+</RelativeLayout>

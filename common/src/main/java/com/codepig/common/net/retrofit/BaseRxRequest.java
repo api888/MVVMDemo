@@ -1,12 +1,12 @@
 package com.codepig.common.net.retrofit;
 
 
+import com.google.gson.Gson;
 import com.codepig.common.config.BaseConfig;
 import com.codepig.common.config.PreferenceConfig;
 import com.codepig.common.net.IServiceLib;
 import com.codepig.common.net.OkHttpClientProvider;
 import com.codepig.common.util.PreferenceUtil;
-import com.google.gson.Gson;
 
 import io.reactivex.disposables.CompositeDisposable;
 import okhttp3.OkHttpClient;

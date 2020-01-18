@@ -2,7 +2,11 @@
     <string name="app_name">common</string>
     <string name="wait">请等待。。。</string>
     <string name="yuan">￥</string>
-    <string name="loading">正在加载中...</string>
+    <string name="loading">加载中...</string>
     <string name="load_failed">加载失败，请点我重试</string>
     <string name="load_end">没有更多数据</string>
+    <string name="upload_image">图片上传中……</string>
+    <string name="upload_video">视频上传中……</string>
+    <string name="compress_video">视频压缩中……</string>
+    <string name="create_order">订单创建中……</string>
 </resources>

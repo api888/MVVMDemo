@@ -1,2 +1,2 @@
-include ':app', ':common', ':customerview', ':gallery_library', ':camera'
+include ':app', ':common', ':customerview', ':gallery_library', ':camera', ':net'
 rootProject.name='MVVMDemo'

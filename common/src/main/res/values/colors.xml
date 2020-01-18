@@ -1,43 +1,66 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
+    <color name="translate">#00000000</color>
     <color name="black">#000000</color>
-
     <color name="white">#ffffff</color>
-    <color name="red">#ff0000</color>
-    <color name="light_red">#FF6251</color>
-    <color name="green">#00ff00</color>
-    <color name="blue">#0000ff</color>
-    <color name="app_color">#ffffff</color>
+    <color name="red">#F72C37</color>
+    <color name="pink">#E8466E</color>
+    <color name="temp">#00001000</color>
+
+    <color name="app_color">#000000</color>
     <color name="text_orange">#FFFF9A14</color>
 <!--    头部背景色-->
     <color name="top_background_color">#fae631</color>
     <!--统一的背景颜色-->
-    <color name="background_color">#efeff4</color>
+    <color name="background_color">#000000</color>
     <!-- 分割线颜色 -->
-    <color name="line_bg">#F6F6F6</color>
+    <color name="line_bg">#F1F1F1</color>
+    <color name="line_gray_bg">#DCDCDC</color>
+    <color name="line_bg_trans_white">#1AFFFFFF</color>
+    <color name="gray_light_bg">#FAFAFA</color>
 <!--    透明黑色-->
     <color name="trans_black">#99000000</color>
-    <color name="light_trans_black">#4D000000</color>
-
-    <color name="main_color">#FAE526</color>
-    <color name="light_black">#FF333333</color>
-    <color name="light_black2">#FF666666</color>
-    <color name="black_statusbar">#33000000</color>
-    <color name="text_gray">#B4BABF</color>
-    <color name="text_gray_dark">#6A7270</color>
-    <color name="text_grayHint">#91979C</color>
-    <color name="text_dark">#2D2E36</color>
-    <color name="text_black">#333333</color>
-    <color name="btn_yellow">#FFFF9A14</color>
-    <color name="btn_text_red">#FF5C4A</color>
+    <color name="trans_black_dark">#D9303031</color>
+    <color name="trans_white">#B3FFFFFF</color>
+    <color name="trans_white2">#CCFFFFFF</color>
+    <color name="trans_white3">#66FFFFFF</color>
+    <color name="trans_gray">#33EEEEEE</color>
+    <color name="light_trans_black">#33000000</color>
+    <color name="light_trans_black_dark">#80000000</color>
     <color name="transparent">#00000000</color>
+
+    <color name="main_color">#00CCB8</color>
+
+    <color name="black_statusbar">#33000000</color>
 
     <color name="decimal_gallery">#2E3334</color>
     <color name="accent_gallery">#01ceb0</color>
     <color name="app_color_gallery">#01ceb0</color>
 
-    <color name="gray_btn">#E0DFE0</color>
+    <color name="gray_box">#535353</color>
+
+<!--    按钮-->
+    <color name="gray_btn">#EEEEEE</color>
+    <color name="blue_btn">#337FAD</color>
     <color name="gray_btn_stroke">#D9DFE6</color>
 
-    <color name="bg_gray">#EFF4F9</color>
+<!--    文字-->
+    <color name="text_gray">#11CBB8</color>
+    <color name="text_light">#FCFBFB</color>
+    <color name="text_gray_dark">#838383</color>
+    <color name="text_gray_dark2">#8E8E8E</color>
+    <color name="text_gray_light">#E4DCD9</color>
+    <color name="text_gray_mid">#989898</color>
+    <color name="text_gray_mid2">#6E6E6E</color>
+    <color name="text_gray_mid3">#BEBEBE</color>
+    <color name="text_dark">#313131</color>
+
+<!--    menu-->#11CBB8
+    <color name="menu_selected">#434343</color>
+    <color name="menu_unselected">#E5E5E5</color>
+    <color name="evo_menu_selected">#11CBB8</color>
+    <color name="evo_menu_unselected">#E5E5E5</color>
+
+<!--    进度条-->
+    <color name="press_green">#26D4CC</color>
 </resources>

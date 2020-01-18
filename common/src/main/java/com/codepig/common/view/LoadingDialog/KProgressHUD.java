@@ -14,7 +14,6 @@ import android.widget.TextView;
 
 import com.codepig.common.R;
 
-
 public class KProgressHUD {
 
     public enum Style {
@@ -44,7 +43,7 @@ public class KProgressHUD {
         mProgressDialog = new ProgressDialog(context);
         mDimAmount = 0;
         //noinspection deprecation
-        mWindowColor = Color.parseColor("#FFFFE0");
+        mWindowColor = Color.parseColor("#FFFFFF");//加载图标背景色
         mAnimateSpeed = 1;
         mCornerRadius = 10;
         mIsAutoDismiss = true;

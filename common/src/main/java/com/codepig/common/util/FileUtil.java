@@ -87,7 +87,7 @@ public class FileUtil {
      * 获取缓存文件地址
      * @return
      */
-    public static String getTempDir() {
+    public static String getAppDir() {
         String path = Environment.getExternalStorageDirectory() + File.separator + BaseConfig.APP_TEMP_PATH + File.separator;
         File file = new File(path);
         if (!file.exists()) {

@@ -75,7 +75,7 @@ public class DensityUtil {
     }
 
     /**
-     * 获取屏幕的宽度
+     * 获取屏幕的高度
      *
      * @param context
      * @return 成功：屏幕宽度，失败：-1

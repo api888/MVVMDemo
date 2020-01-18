@@ -76,8 +76,6 @@ public abstract class HttpObserver<T> extends DisposableObserver<T> {
                     break;
                 case FORBIDDEN: // 网络禁止访问
                 case NOT_FOUND:
-                    ToastUtil.showToast( "请求失败,请稍后重试:" + error.code());
-                    break;
                 case REQUEST_TIMEOUT:
                     ToastUtil.showToast( "请求超时,请稍后重试:" + error.code());
                     break;
@@ -96,7 +94,7 @@ public abstract class HttpObserver<T> extends DisposableObserver<T> {
         } else if (e instanceof UnknownHostException) { // is not http exception
             ToastUtil.showToast("网络连接异常，请检查网络");
         } else {
-            ToastUtil.showToast("请求失败,请稍后重试");
+//            ToastUtil.showToast("请求失败,请稍后重试");
         }
     }
 }

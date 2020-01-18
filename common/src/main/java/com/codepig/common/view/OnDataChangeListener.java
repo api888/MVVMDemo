@@ -7,6 +7,5 @@ package com.codepig.common.view;
 
 public interface OnDataChangeListener {
     void onRefresh();
-
     void onLoadMore();
 }

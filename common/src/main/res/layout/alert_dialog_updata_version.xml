@@ -14,7 +14,7 @@
         android:background="@drawable/version_background"
         android:gravity="center"
         android:text="发现新版本"
-        android:textColor="@color/text_black"
+        android:textColor="@color/text_dark"
         android:textSize="@dimen/font_size_big" />
 
     <TextView

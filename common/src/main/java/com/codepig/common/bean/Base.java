@@ -1,22 +1,22 @@
 package com.codepig.common.bean;
 
 public class Base {
-    private String status_code;
-    private String message;
+    private String respCode;
+    private String respMsg;
 
-    public String getStatus_code() {
-        return status_code;
+    public String getRespCode() {
+        return respCode;
     }
 
-    public void setStatus_code(String status_code) {
-        this.status_code = status_code;
+    public void setRespCode(String respCode) {
+        this.respCode = respCode;
     }
 
-    public String getMessage() {
-        return message + "";
+    public String getRespMsg() {
+        return respMsg + "";
     }
 
-    public void setMessage(String message) {
-        this.message = message;
+    public void setRespMsg(String respMsg) {
+        this.respMsg = respMsg;
     }
 }

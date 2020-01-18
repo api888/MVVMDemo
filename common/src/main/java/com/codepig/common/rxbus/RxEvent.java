@@ -37,6 +37,33 @@ public class RxEvent {
     /**
      * 登录,注册事件(Login and register of user==LRU)
      */
+    public static class MainEvent extends RxEvent {
+        public static final int VALUE = 100;
+        public static final int SHOW_BOTTOM = VALUE + 1;//显示底部导航tab
+        public static final int HIDE_BOTTOM = VALUE + 2;//隐藏底部导航tab
+        public static final int GO_USER_PAGE = VALUE + 3;//打开个人主页
+        public static final int SET_DESTROY = VALUE + 4;//设置自焚时间
+        public static final int SET_LINK = VALUE + 5;//设置自焚时间
+        public static final int SET_DESCRIPTION = VALUE + 6;
+        public static final int SET_NICK = VALUE + 7;
+        public static final int POST_GROUP_SUCCESS = VALUE + 8;
+        public static final int SHOW_UPLOAD_WINDOW = VALUE + 9;
+        public static final int UPLOAD_SUCCESS = VALUE + 10;
+        public static final int UPLOAD_FAILED = VALUE + 11;
+        public static final int UPLOAD_WINDOW_CLOSE = VALUE + 12;
+        public static final int PUSH_NEWS = VALUE + 13;
+        public static final int UPDATA_SUB = VALUE + 14;
+        public static final int VIP_PAY_FINISH = VALUE + 15;
+        public static final int NEW_APK_DOWNLOADED = VALUE + 16;
+
+        public MainEvent() {
+            super(VALUE);
+        }
+    }
+
+    /**
+     * 登录,注册事件(Login and register of user==LRU)
+     */
     public static class LoginEvent extends RxEvent {
         public static final int VALUE = 100;
         /**
@@ -45,6 +72,7 @@ public class RxEvent {
         public static final int LOGIN_SUCCESS = VALUE + 1;
         public static final int RE_LOGIN = VALUE + 2;
         public static final int LOGOUT = VALUE + 3;
+        public static final int GET_USER_INFO = VALUE + 4;
         public static final int LOGIN_WEXIN = VALUE +4;
         public static final int BIND_WEXIN = VALUE +5;
 
@@ -53,90 +81,36 @@ public class RxEvent {
         }
     }
 
-    public static class BbsEvent extends RxEvent {
-        public static final int VALUE = 200;
-
-        public static final int COMMENT_INSERT = VALUE + 1;     //添加评论
-        public static final int BBS_INSERT = VALUE + 2;     //添加帖子
-        public static final int INDEX_SWITCH = VALUE + 3;   //跳转信息中心
-        public static final int BBS_DELETE = VALUE + 4;     //帖子删除
-        public static final int BBS_BLACK = VALUE + 5;     //拉黑
-        public static final int HEADLINE_COMMENT_INSERT = VALUE + 6;     //宜兴头条点赞
-    }
-
     public static class PersonInfoEvent extends RxEvent {
         public static final int VALUE = 300;
-
-        public static final int ADDRESS_INSERT = VALUE + 1;     //添加地址
-
-        public static final int ADDRESS_SAVE = VALUE + 2;     //编辑地址
-
-        public static final int COUPON_INSERT = VALUE + 3;     //添加优惠券
-
-        public static final int COUPON_SAVE = VALUE + 4;     //编辑优惠券
-
-        public static final int COUPON_DELTE = VALUE + 5;     //删除优惠券
-
-        public static final int IDENTIFY_CHANGE = VALUE + 6;    //切换身份
-
-        public static final int ADDRESS_DELETE = VALUE + 7;    //删除地址
-
+        public static final int SET_NICK = VALUE + 1;
+        public static final int SET_DESCRIPTION = VALUE + 2;
+        public static final int SET_HEAD = VALUE + 3;
+        public static final int SET_COVER = VALUE + 4;
+        public static final int VIP_PAYED = VALUE + 5;
         public static final int SYSTEM_NOTIFICATION_READED = VALUE + 8;    //系统消息已读
-
-        public static final int ORDER_NOTIFICATION_READED = VALUE + 9;    //订单息已读
     }
 
-    public static class OrderEvent extends RxEvent {
+    public static class GroupEvent extends RxEvent {
         public static final int VALUE = 400;
-
-        public static final int SELECT_ADDRESS = VALUE + 1;
-
-        public static final int SHOP_CAR_CONFIRM_ORDER = VALUE + 2;
-
-        public static final int CONFIRM_ORDER = VALUE + 3;
-
-        public static final int ORDER_CANCEL = VALUE + 4;//取消订单
-        public static final int ORDER_SEND = VALUE + 5;//发货
-        public static final int ORDER_PAY = VALUE + 6;//支付
-        public static final int ORDER_OFFLINE_PAY = VALUE + 7;//到店付
-        public static final int ORDER_CHECK_OFFLINE_PAY = VALUE + 8;//确认到店付
-        public static final int ORDER_COMMENT = VALUE + 9;//评价
-        public static final int ORDER_CHECK_RECEIVER = VALUE + 10;//确认收货
-
-        public static final int ALIPAY_FINISH = VALUE + 11;       //支付宝支付完成
-        public static final int WECHATPAY_FINISH = VALUE + 12;       //微信支付完成
-
-        public static final int PAY_FINISH = VALUE + 13;       //支付完成
-
-        public static final int SHOPCAR_DELETE = VALUE + 14;       //购物车删除
-        public static final int SHOPCAR_ADD = VALUE + 15;       //购物车添加
+        public static final int SUB = VALUE + 1;
+        public static final int UNSUB = VALUE + 2;
+        public static final int UPDATA_GROUP = VALUE + 3;
     }
 
-    public static class GoodsManageEvent extends RxEvent {
+    public static class VideoEvent extends RxEvent {
         public static final int VALUE = 500;
-
-        public static final int REFRESH_GOODSMANAGE_NUMBER = VALUE + 1;
-        public static final int REFRESH_GOODSMANAGE_AVAILABLE = VALUE + 2;
-        public static final int REFRESH_GOODSMANAGE_UNAVAILABLE = VALUE + 3;
-        public static final int REFRESH_GOODSMANAGE_OPERATION = VALUE + 4;
+        public static final int POST_VIDEO = VALUE + 1;
+        public static final int DELETE_VIDEO = VALUE + 2;
+        public static final int CUT_PREV = VALUE + 3;
+        public static final int CUT_FEATURE = VALUE + 4;
+        public static final int UPLOAD_PROGRESS = VALUE + 5;
+        public static final int CUT_TOPIC = VALUE + 6;
     }
 
-    public static class CouponEvent extends RxEvent {
+    public static class ChatEvent extends RxEvent {
         public static final int VALUE = 600;
-
-        public static final int COUPON_RECIEVE = VALUE + 1;
-        public static final int REFRESH_MY_COUPON_TICKET_NUM = VALUE + 2;
-        public static final int REFRESH_MY_COUPON = VALUE + 3;
-    }
-
-    public static class MapEvent extends RxEvent {
-        public static final int VALUE = 700;
-
-        public static final int RE_DIRECT = VALUE + 1;
-        public static final int CHECK_OPEN = VALUE + 2;
-        public static final int GOT_AREA = VALUE + 3;
-        public static final int GOT_COMMUNITY = VALUE + 4;
-        public static final int CHANGE_COMMUNITY = VALUE + 5;
+        public static final int GOT_MESSAGE = VALUE + 1;
     }
 
     public int getType() {

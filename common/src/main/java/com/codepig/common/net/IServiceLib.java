@@ -22,7 +22,6 @@ import retrofit2.http.Query;
 public interface IServiceLib {
     /**
      * 上传图片
-     *
      * @param body
      * @return
      */

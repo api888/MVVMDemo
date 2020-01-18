@@ -24,6 +24,9 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 
 import com.cjt2325.cameralibrary.activity.CameraActivity;
+import com.google.gson.Gson;
+import com.jushi.gallery.activity.ImageGalleryActivity;
+import com.jushi.gallery.bean.ImageData;
 import com.codepig.common.R;
 import com.codepig.common.adapter.ImageSelectAdapter;
 import com.codepig.common.bean.Upload;
@@ -42,9 +45,6 @@ import com.codepig.common.util.ImageUtil;
 import com.codepig.common.util.PermissionCompat;
 import com.codepig.common.util.ToastUtil;
 import com.codepig.common.widget.GridSpacingItemDecoration;
-import com.google.gson.Gson;
-import com.jushi.gallery.activity.ImageGalleryActivity;
-import com.jushi.gallery.bean.ImageData;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -165,7 +165,7 @@ public class ImageSelectView extends LinearLayout implements ImageSelectAdapter.
     private void toShowDialog() {
         if (adapter.getImageSize() < image_max_size) {
             temp_path = FileUtil.getBaseImageDir() + System.currentTimeMillis() + ".jpg";
-            video_path = FileUtil.getTempDir()/* + System.currentTimeMillis()+".mp4"*/;
+            video_path = FileUtil.getAppDir()/* + System.currentTimeMillis()+".mp4"*/;
             if (showVideo && !hasVideo()) {//允许上传视频，并且还没有选择视视频
                 showAddImageAndVideoDialog((Activity) context, (image_max_size - adapter.getImageSize()));
             } else {
@@ -630,7 +630,7 @@ public class ImageSelectView extends LinearLayout implements ImageSelectAdapter.
 
                     @Override
                     public void onNext(Upload uploadImage) {
-                        if (StringConfig.OK.equals(uploadImage.getStatus_code())) {
+                        if (StringConfig.OK.equals(uploadImage.getRespCode())) {
                             adapter.getData().get(index).setImage_id(uploadImage.getData().getImage_id());
                             if (CommonUtils.isFull(getImgIds(), getImgIds().size())) {
                                 if (upload_listener != null) {

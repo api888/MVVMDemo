@@ -43,7 +43,7 @@ public abstract class LoadMoreView {
             case STATUS_END:
                 visibleLoading(holder, false);
                 visibleLoadFail(holder, false);
-                visibleLoadEnd(holder, true);
+//                visibleLoadEnd(holder, true);
                 break;
             case STATUS_DEFAULT:
                 visibleLoading(holder, false);

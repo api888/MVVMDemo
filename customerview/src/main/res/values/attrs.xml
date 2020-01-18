@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <declare-styleable name="LoadingBar">
+        <attr name="lb_bg_color" format="color"/>
+        <attr name="lb_fg_color" format="color"/>
+    </declare-styleable>
+</resources>

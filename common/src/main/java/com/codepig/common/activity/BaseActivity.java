@@ -5,6 +5,7 @@ import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
 import android.databinding.OnRebindCallback;
 import android.databinding.ViewDataBinding;
+import android.graphics.Color;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
@@ -19,8 +20,8 @@ import com.codepig.common.callback.BaseCB;
 import com.codepig.common.util.KeyBoardUtil;
 import com.codepig.common.util.StringUtil;
 import com.codepig.common.util.ToastUtil;
-import com.codepig.common.util.WindowUtil;
 import com.codepig.common.view.LoadingDialog.LoadingDialog;
+import com.codepig.common.view.TextOnlyLoadingDialog;
 import com.codepig.common.viewmodel.BaseVM;
 
 /**
@@ -39,6 +40,8 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCB {
      */
     protected BaseVM vm;
 
+    protected TextOnlyLoadingDialog dialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -46,14 +49,90 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCB {
             throw new NullPointerException();
         }
         baseBinding = DataBindingUtil.setContentView(this, setLayout());
-        try {
-            WindowUtil.setStatusbarColor(BaseActivity.this, getStatusBarColor());
-        } catch (Exception e) {
-            e.printStackTrace();
-        }
+
         vm = initViewModel();
 
+        //状态栏隐藏
+//        setTopBarState(true);
+        //状态栏透明
+        setTopBarTranslate(true);
+
         initAll(savedInstanceState);
+    }
+
+    /**
+     * 设置状态栏是否隐藏
+     * @param isHide
+     */
+    public void setTopBarHide(boolean isHide){
+        if(isHide) {
+//            try {
+//                WindowUtil.setStatusbarColor(BaseActivity.this, getStatusBarColor());
+//            } catch (Exception e) {
+//                e.printStackTrace();
+//            }
+
+            int uiFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                    | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                    | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                    | View.SYSTEM_UI_FLAG_FULLSCREEN
+                    | View.SYSTEM_UI_FLAG_IMMERSIVE;
+//            uiFlags |= 0x00001000;
+            getWindow().getDecorView().setSystemUiVisibility(uiFlags);
+        }else{
+            int uiFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE;
+//            uiFlags |= 0x00001000;
+            getWindow().getDecorView().setSystemUiVisibility(uiFlags);
+        }
+    }
+
+    /**
+     * 设置状态栏是否透明
+     * @param isHide
+     */
+    public void setTopBarTranslate(boolean isHide){
+        if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+            if(isHide) {
+//            getWindow().requestFeature(Window.FEATURE_NO_TITLE);
+//            if(Build.VERSION.SDK_INT >= Build.VERSION_CODES.LOLLIPOP) {
+//                Window window = getWindow();
+//                window.clearFlags(WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS
+//                        | WindowManager.LayoutParams.FLAG_TRANSLUCENT_NAVIGATION);
+//                window.getDecorView().setSystemUiVisibility(View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+//                                | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+//                        | View.SYSTEM_UI_FLAG_LAYOUT_STABLE);
+//                window.addFlags(WindowManager.LayoutParams.FLAG_DRAWS_SYSTEM_BAR_BACKGROUNDS);
+//                window.setStatusBarColor(Color.TRANSPARENT);
+//                window.setNavigationBarColor(Color.TRANSPARENT);
+//            }
+//
+                int uiFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE;
+//            uiFlags |= 0x00001000;
+                getWindow().getDecorView().setSystemUiVisibility(uiFlags);
+                getWindow().setStatusBarColor(Color.TRANSPARENT);
+                getWindow().setNavigationBarColor(Color.TRANSPARENT);
+            }else{
+                int uiFlags = View.SYSTEM_UI_FLAG_LAYOUT_STABLE
+                        | View.SYSTEM_UI_FLAG_LAYOUT_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE_STICKY
+                        | View.SYSTEM_UI_FLAG_LAYOUT_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_HIDE_NAVIGATION
+                        | View.SYSTEM_UI_FLAG_FULLSCREEN
+                        | View.SYSTEM_UI_FLAG_IMMERSIVE;
+//            uiFlags |= 0x00001000;
+                getWindow().getDecorView().setSystemUiVisibility(uiFlags);
+                getWindow().setStatusBarColor(Color.BLACK);
+                getWindow().setNavigationBarColor(Color.BLACK);
+            }
+        }
     }
 
     public int getStatusBarColor(){
@@ -68,6 +147,7 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCB {
     @Override
     protected void onResume() {
         super.onResume();
+        setTopBarTranslate(true);
     }
 
     @Override
@@ -127,12 +207,37 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCB {
 
     @Override
     public void showLoaddingDialog() {
-        LoadingDialog.show(BaseActivity.this, R.string.wait);
+//        LoadingDialog.show(BaseActivity.this, R.string.wait);
+        TextOnlyLoadingDialog.Builder builder=new TextOnlyLoadingDialog.Builder(BaseActivity.this)
+                .setMessage("请等待...")
+                .setCancelable(false);
+        dialog=builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void showLoaddingDialog(int resid) {
+//        LoadingDialog.show(BaseActivity.this, resid);//带转圈圈的Dialog
+        TextOnlyLoadingDialog.Builder builder=new TextOnlyLoadingDialog.Builder(BaseActivity.this)
+                .setMessage(BaseActivity.this.getString(resid))
+                .setCancelable(false);
+        dialog=builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void showLoaddingDialog(String msg) {
+        TextOnlyLoadingDialog.Builder builder=new TextOnlyLoadingDialog.Builder(BaseActivity.this)
+                .setMessage(msg)
+                .setCancelable(false);
+        dialog=builder.create();
+        dialog.show();
     }
 
     @Override
     public void dismissLoaddingDialog() {
-        LoadingDialog.dismiss();
+//        LoadingDialog.dismiss();
+        dialog.dismiss();
     }
 
     @Override

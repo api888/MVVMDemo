@@ -16,11 +16,13 @@ import android.view.View;
 import android.view.ViewGroup;
 
 import com.codepig.common.R;
+import com.codepig.common.activity.BaseActivity;
 import com.codepig.common.callback.BaseCB;
 import com.codepig.common.util.KeyBoardUtil;
 import com.codepig.common.util.StringUtil;
 import com.codepig.common.util.ToastUtil;
 import com.codepig.common.view.LoadingDialog.LoadingDialog;
+import com.codepig.common.view.TextOnlyLoadingDialog;
 import com.codepig.common.viewmodel.BaseVM;
 
 
@@ -40,6 +42,8 @@ public abstract class BaseFragment extends Fragment implements BaseCB {
      * 基础binding view
      */
     protected ViewDataBinding baseBinding;
+
+    protected TextOnlyLoadingDialog dialog;
 
     @Nullable
     @Override
@@ -144,12 +148,38 @@ public abstract class BaseFragment extends Fragment implements BaseCB {
 
     @Override
     public void showLoaddingDialog() {
-        LoadingDialog.show(getActivity(), R.string.wait);
+//        LoadingDialog.show(getActivity(), R.string.wait);
+        TextOnlyLoadingDialog.Builder builder=new TextOnlyLoadingDialog.Builder(getActivity())
+                .setMessage("请等待...")
+                .setCancelable(false);
+        dialog=builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void showLoaddingDialog(int resid) {
+//        LoadingDialog.show(getActivity(), resid);
+        TextOnlyLoadingDialog.Builder builder=new TextOnlyLoadingDialog.Builder(getActivity())
+                .setMessage(getActivity().getString(resid))
+                .setCancelable(false);
+        dialog=builder.create();
+        dialog.show();
+    }
+
+    @Override
+    public void showLoaddingDialog(String msg) {
+//        LoadingDialog.show(getActivity(), msg);
+        TextOnlyLoadingDialog.Builder builder=new TextOnlyLoadingDialog.Builder(getActivity())
+                .setMessage(msg)
+                .setCancelable(false);
+        dialog=builder.create();
+        dialog.show();
     }
 
     @Override
     public void dismissLoaddingDialog() {
-        LoadingDialog.dismiss();
+//        LoadingDialog.dismiss();
+        dialog.dismiss();
     }
 
     @Override

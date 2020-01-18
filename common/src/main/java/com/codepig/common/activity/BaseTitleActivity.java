@@ -3,6 +3,7 @@ package com.codepig.common.activity;
 import android.databinding.DataBindingUtil;
 import android.databinding.ViewDataBinding;
 import android.os.Bundle;
+import android.support.annotation.DrawableRes;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -54,6 +55,13 @@ public abstract class BaseTitleActivity extends BaseActivity {
         baseTitleBinding.tvTitle.setText(title);
     }
 
+    public void hideTitle(){
+        baseTitleBinding.tTitle.setVisibility(View.GONE);
+    }
+
+    public void setNavigationIcon(@DrawableRes int resId){
+        baseTitleBinding.tTitle.setNavigationIcon(resId);
+    }
     /**
     * @description 默认的NavigationIcon
     * @author nmssdmf

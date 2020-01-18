@@ -25,7 +25,6 @@ public class MultiSwipeRefreshLayout extends SwipeRefreshLayout {
 
     public MultiSwipeRefreshLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
-//        setColorSchemeResources(R.color.text_black);
     }
 
     /**

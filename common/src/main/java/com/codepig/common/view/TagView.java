@@ -36,13 +36,13 @@ public class TagView extends android.support.v7.widget.AppCompatTextView {
         if (typedArray == null) {
             selectedBackground = typedArray.getDrawable(R.styleable.TagView_selected_background);
             unSelectedBackground = typedArray.getDrawable(R.styleable.TagView_unselected_background);
-            selectedTextColor = typedArray.getColor(R.styleable.TagView_selected_textcolor, getResources().getColor(R.color.text_black));
-            unSelectedTextColor = typedArray.getColor(R.styleable.TagView_unselected_textcolor, getResources().getColor(R.color.text_black));
+            selectedTextColor = typedArray.getColor(R.styleable.TagView_selected_textcolor, getResources().getColor(R.color.text_dark));
+            unSelectedTextColor = typedArray.getColor(R.styleable.TagView_unselected_textcolor, getResources().getColor(R.color.text_dark));
         } else {
             selectedBackground = getResources().getDrawable(R.drawable.round_button_with_stroke);
             unSelectedBackground = getResources().getDrawable(R.drawable.round_shape_gray);
-            selectedTextColor = getResources().getColor(R.color.text_black);
-            unSelectedTextColor = getResources().getColor(R.color.text_black);
+            selectedTextColor = getResources().getColor(R.color.text_dark);
+            unSelectedTextColor = getResources().getColor(R.color.text_dark);
         }
         setTextColor(unSelectedTextColor);
         setBackgroundDrawable(unSelectedBackground);

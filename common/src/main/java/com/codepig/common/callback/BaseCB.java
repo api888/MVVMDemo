@@ -20,6 +20,13 @@ public interface BaseCB {
     * @date 2018/7/4 0004 11:47
     * @version v3.2.1
     */
+    void showLoaddingDialog(int resid);
+    void showLoaddingDialog(String msg);
+    /**
+     * @description 显示菊花图标，带文字内容参数
+     * @date 2018/7/4 0004 11:47
+     * @version v3.2.1
+     */
     void showLoaddingDialog();
     /**
     * @description 关闭菊花显示

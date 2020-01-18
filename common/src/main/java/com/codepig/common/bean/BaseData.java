@@ -6,14 +6,14 @@ package com.codepig.common.bean;
  * 基础的数据实体
  */
 public final class BaseData<T> extends Base {
-    private T data;
+    private T respData;
 
     public T getData() {
-        return data;
+        return respData;
     }
 
     public void setData(T data) {
-        this.data = data;
+        this.respData = data;
     }
 
 }

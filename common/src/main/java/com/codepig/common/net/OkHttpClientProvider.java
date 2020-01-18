@@ -2,12 +2,14 @@ package com.codepig.common.net;
 
 
 import android.os.Build;
+import android.text.TextUtils;
 
+import com.codepig.common.config.DeviceConfig;
+import com.google.gson.Gson;
 import com.codepig.common.bean.Base;
 import com.codepig.common.config.BaseConfig;
 import com.codepig.common.rxbus.RxBus;
 import com.codepig.common.rxbus.RxEvent;
-import com.google.gson.Gson;
 
 import org.json.JSONObject;
 
@@ -271,7 +273,7 @@ public class OkHttpClientProvider {
                 if (mediaType.toString().contains("application/json")) {
                     String string = response.body().string();
                     Base base = new Gson().fromJson(string, Base.class);
-                    if ("401".equals(base.getStatus_code())) {
+                    if ("401".equals(base.getRespCode())) {
                         RxBus.getInstance().send(RxEvent.LoginEvent.RE_LOGIN, null);//发送消息,跳转到登陆页面
                     }
                     ResponseBody responseBody = ResponseBody.create(mediaType, string);
@@ -303,15 +305,20 @@ public class OkHttpClientProvider {
 
             Request.Builder builder = chain.request().newBuilder();
 
+            //请求头
             // to add agent
             builder.addHeader("User-Agent", UA);
             //为解决 http://blog.csdn.net/zhangteng22/article/details/52233126 问题
             builder.addHeader("Connection", "close");
+            builder.addHeader("Content-Type", "application/json;charset=UTF-8");
             builder.addHeader("Accept", "application/vnd.trading.v" + version + "+json");
             if (null == token || "".equals(token) || "null".equals(token)) {
                 // no token
             } else {
                 builder.addHeader("Authorization", "Bearer " + token + "");
+            }
+            if(!TextUtils.isEmpty(DeviceConfig.getDevice_token())){
+                builder.addHeader("device_token", DeviceConfig.getDevice_token());
             }
 
             Response response = chain.proceed(builder.build());

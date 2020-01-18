@@ -49,8 +49,7 @@ import java.util.ArrayList;
  * {@sample development/samples/Support4Demos/src/com/codepig/android/supportv4/app/FragmentTabsFragmentSupport.java
  *      complete}
  */
-public class MyFragmentTabHost extends TabHost
-        implements TabHost.OnTabChangeListener {
+public class MyFragmentTabHost extends TabHost implements TabHost.OnTabChangeListener {
     private final ArrayList<TabInfo> mTabs = new ArrayList<>();
     private FrameLayout mRealTabContent;
     private Context mContext;

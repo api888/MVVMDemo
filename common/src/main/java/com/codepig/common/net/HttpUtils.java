@@ -37,15 +37,13 @@ public class HttpUtils {
                     @Override
                     public void onNext(T t) {
                         LoadingDialog.dismiss();
-                        if (isReturnOk(t.getStatus_code())) {
-                            callback.onSuccess(t);
-                        } else {
-                            if ("401".equals(t.getStatus_code())) {
-                                ToastUtil.showToast("code:401");
-                            } else {
-                                ToastUtil.showToast(t.getMessage());
-                            }
+//                        System.out.println("HttpUtil code:"+t.getRespCode());
+                        if ("401".equals(t.getRespCode())) {
+                            ToastUtil.showToast("code:401");
                             callback.onDefeated(t);
+                        } else {
+                            callback.onSuccess(t);
+//                            ToastUtil.showToast("HttpUtil:"+t.getRespMsg());
                         }
                     }
                 }));

@@ -6,13 +6,16 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.support.v7.widget.SimpleItemAnimator;
 import android.util.AttributeSet;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.TextView;
 
 import com.codepig.common.R;
 import com.codepig.common.base.BaseQuickAdapter;
@@ -30,6 +33,7 @@ public class CustomerRecyclerView extends LinearLayout implements BaseQuickAdapt
     private MultiSwipeRefreshLayout srl;
     private RecyclerView rv;
     private ImageView picNoDataImageView;
+    private TextView mTextView;
     private OnDataChangeListener onDataChangeListener;
     private RecyclerView.LayoutManager layoutManager;
     private BaseQuickAdapter adapter;
@@ -61,6 +65,8 @@ public class CustomerRecyclerView extends LinearLayout implements BaseQuickAdapt
         rv = new RecyclerView(context);
         rv.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
         rv.setVerticalScrollBarEnabled(true);
+//        ((SimpleItemAnimator) rv.getItemAnimator()).setSupportsChangeAnimations(false);//去掉默认动画
+//        rv.getItemAnimator().setChangeDuration(0);
         if (layoutManager == null) {
             rv.setLayoutManager(new LinearLayoutManager(context));
         }
@@ -71,12 +77,22 @@ public class CustomerRecyclerView extends LinearLayout implements BaseQuickAdapt
         srl.setSwipeableChildren(rv);
         relativeLayout.addView(rv);
         //添加暂无内容
-        picNoDataImageView = new ImageView(context);
-        picNoDataImageView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
-        picNoDataImageView.setImageDrawable(getResources().getDrawable(R.drawable.pic_no_data));
-        picNoDataImageView.setScaleType(ImageView.ScaleType.CENTER);
-        picNoDataImageView.setVisibility(View.GONE);
-        relativeLayout.addView(picNoDataImageView);
+//        picNoDataImageView = new ImageView(context);
+//        picNoDataImageView.setLayoutParams(new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+//        picNoDataImageView.setImageDrawable(getResources().getDrawable(R.drawable.pic_no_data));
+//        picNoDataImageView.setScaleType(ImageView.ScaleType.CENTER);
+//        picNoDataImageView.setVisibility(View.GONE);
+//        relativeLayout.addView(picNoDataImageView);
+
+        mTextView=new TextView(context);
+        LayoutParams textLayoutParams=new LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+        mTextView.setLayoutParams(textLayoutParams);
+        mTextView.setTextColor(getResources().getColor(R.color.trans_white));
+        mTextView.setText("暂无内容");
+        mTextView.setGravity(Gravity.CENTER);
+        mTextView.setVisibility(View.GONE);
+        relativeLayout.addView(mTextView);
+
         addView(srl);
 
         if (attrs != null) {
@@ -86,6 +102,10 @@ public class CustomerRecyclerView extends LinearLayout implements BaseQuickAdapt
 
             loadmoreEnable = array.getBoolean(R.styleable.CustomerRecyclerView_loadmore_enable, true);
         }
+    }
+
+    public void scrollToPosition(int position){
+        rv.scrollToPosition(position);
     }
 
     @Override
@@ -222,9 +242,11 @@ public class CustomerRecyclerView extends LinearLayout implements BaseQuickAdapt
     private void isShowNoDataPicImageView() {
         if (isPicNoDataImageViewVisible) {
             if (adapter.getData().size() > 0) {
-                picNoDataImageView.setVisibility(View.GONE);
+                mTextView.setVisibility(View.GONE);
+//                picNoDataImageView.setVisibility(View.GONE);
             } else {
-                picNoDataImageView.setVisibility(View.VISIBLE);
+                mTextView.setVisibility(View.VISIBLE);
+//                picNoDataImageView.setVisibility(View.VISIBLE);
             }
         }
     }
@@ -244,9 +266,11 @@ public class CustomerRecyclerView extends LinearLayout implements BaseQuickAdapt
     public void setPicNoDataImageViewVisible(boolean picNoDataImageViewVisible) {
         isPicNoDataImageViewVisible = picNoDataImageViewVisible;
         if (isPicNoDataImageViewVisible) {
-            picNoDataImageView.setVisibility(View.VISIBLE);
+            mTextView.setVisibility(View.VISIBLE);
+//            picNoDataImageView.setVisibility(View.VISIBLE);
         } else {
-            picNoDataImageView.setVisibility(View.GONE);
+            mTextView.setVisibility(View.GONE);
+//            picNoDataImageView.setVisibility(View.GONE);
         }
     }
 }
