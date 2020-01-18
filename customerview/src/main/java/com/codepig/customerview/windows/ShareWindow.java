@@ -124,7 +124,7 @@ public class ShareWindow extends PopupWindow {
         GlideUtil.load(binding.userHead, userInfo.getAvatars());
         binding.userName.setText(userInfo.getNick_name());
         binding.promotionCode.setText("邀请码："+userInfo.getPromotion_code());
-        String contentEtString="api.qihuobense.com/api/v1/promotion_code/"+userInfo.getPromotion_code();
+        String contentEtString="api.myhost.com/api/v1/promotion_code/"+userInfo.getPromotion_code();
         Bitmap qrBitmap = CodeCreator.createQRCode(contentEtString, 400,400, null);
         binding.qrCodeImage.setImageBitmap(qrBitmap);
         if(videoInfoBean!=null) {
