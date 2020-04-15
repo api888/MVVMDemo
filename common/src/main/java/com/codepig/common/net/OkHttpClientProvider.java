@@ -50,15 +50,15 @@ public class OkHttpClientProvider {
     /**
      * 设置连接超时时间
      */
-    public static final int OKHTTP_CLIENT_CONNECT_TIMEOUT = 30;
+    public static final int OKHTTP_CLIENT_CONNECT_TIMEOUT = 300;
     /**
      * 设置写入超时时间
      */
-    public static final int OKHTTP_CLIENT_WRITE_TIMEOUT = 30;
+    public static final int OKHTTP_CLIENT_WRITE_TIMEOUT = 300;
     /**
      * 设置读取时间
      */
-    public static final int OKHTTP_CLIENT_READ_TIMEOUT = 30;
+    public static final int OKHTTP_CLIENT_READ_TIMEOUT = 300;
 
     private static OkHttpClientProvider instance;
 
@@ -312,6 +312,8 @@ public class OkHttpClientProvider {
             builder.addHeader("Connection", "close");
             builder.addHeader("Content-Type", "application/json;charset=UTF-8");
             builder.addHeader("Accept", "application/vnd.trading.v" + version + "+json");
+            builder.addHeader("mobile_os_version", Build.VERSION.RELEASE);
+            builder.addHeader("mobile_os", "android");
             if (null == token || "".equals(token) || "null".equals(token)) {
                 // no token
             } else {
@@ -319,6 +321,9 @@ public class OkHttpClientProvider {
             }
             if(!TextUtils.isEmpty(DeviceConfig.getDevice_token())){
                 builder.addHeader("device_token", DeviceConfig.getDevice_token());
+            }
+            if(!TextUtils.isEmpty(DeviceConfig.getDevice_num())){
+                builder.addHeader("device_num", DeviceConfig.getDevice_num());
             }
 
             Response response = chain.proceed(builder.build());

@@ -49,6 +49,15 @@
         <item name="android:layout_marginLeft">0dp</item>
     </style>
 
+<!--    <style name="MyTabLayoutStyle" parent="Base.Widget.Design.TabLayout">-->
+<!--        <item name="tabIndicatorColor">@color/main_color</item>-->
+<!--        <item name="tabIndicatorFullWidth">false</item>-->
+<!--        <item name="tabIndicatorHeight">1dp</item>-->
+<!--        <item name="tabBackground">@color/white</item>-->
+<!--        <item name="tabSelectedTextColor">@color/main_color</item>-->
+<!--        <item name="tabTextColor">@color/text_gray_dark</item>-->
+<!--    </style>-->
+
     <!-- 项目menu 样式 -->
     <style name="MenuTextStyle">
         <item name="android:textColor">@color/text_dark</item>

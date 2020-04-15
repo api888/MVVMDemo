@@ -1,0 +1,39 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools">
+
+<!--    <data>-->
+<!--        <import type="android.view.View" />-->
+<!--        <variable-->
+<!--            name="data"-->
+<!--            type="com.everyone.net.bean.CommentsListBean">-->
+<!--        </variable>-->
+<!--    </data>-->
+
+    <RelativeLayout
+        android:gravity="center_vertical"
+        android:layout_width="wrap_content"
+        android:layout_height="54dp">
+        <RelativeLayout
+            android:gravity="center"
+            android:id="@+id/rootLayout"
+            android:layout_marginRight="4dp"
+            android:layout_marginLeft="4dp"
+            android:background="@drawable/button_box_with_gray_stroke"
+            android:layout_width="64dp"
+            android:layout_height="20dp">
+            <TextView
+                android:id="@+id/nameText"
+                android:background="@color/video_cate_unselected"
+                android:layout_gravity="center"
+                android:gravity="center"
+                android:text="分类"
+                android:textColor="@color/text_dark"
+                android:textSize="13dp"
+                android:layout_width="62dp"
+                android:layout_height="18dp"/>
+        </RelativeLayout>
+    </RelativeLayout>
+
+</layout>

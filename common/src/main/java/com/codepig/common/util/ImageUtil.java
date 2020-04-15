@@ -247,30 +247,30 @@ public class ImageUtil {
         return path;
     }
 
-//    public static int[] getImageSize(Context context,String path) {
-//        int[] imageSize=new int[2];
-//        Glide.with(context).asBitmap().load(path).into(new SimpleTarget<Bitmap>() {
-//            @Override
-//            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
-//                int width = resource.getWidth();
-//                int height = resource.getHeight();
-//                imageSize[0]=width;
-//                imageSize[1]=height;
-//            }
-//        });
-//        return imageSize;
-//    }
+    public static int[] getImageSize(Context context,String path) {
+        int[] imageSize=new int[2];
+        Glide.with(context).asBitmap().load(path).into(new SimpleTarget<Bitmap>() {
+            @Override
+            public void onResourceReady(Bitmap resource, Transition<? super Bitmap> transition) {
+                int width = resource.getWidth();
+                int height = resource.getHeight();
+                imageSize[0]=width;
+                imageSize[1]=height;
+            }
+        });
+        return imageSize;
+    }
 
-//    public static int[] getImageSize(String path){
-//        int[] imageSize=new int[2];
-//        BitmapFactory.Options options = new BitmapFactory.Options();
-//        options.inJustDecodeBounds = true;//这个参数设置为true才有效，
-//        Bitmap bmp = BitmapFactory.decodeFile(path, options);//这里的bitmap是个空
-//        if(bmp==null){
-//        }
-//        imageSize[1]=options.outHeight;
-//        imageSize[0]= options.outWidth;
-//        System.out.println("options.outWidth:"+options.outWidth);
-//        return imageSize;
-//    }
+    public static int[] getImageSize(String path){
+        int[] imageSize=new int[2];
+        BitmapFactory.Options options = new BitmapFactory.Options();
+        options.inJustDecodeBounds = true;//这个参数设置为true才有效，
+        Bitmap bmp = BitmapFactory.decodeFile(path, options);//这里的bitmap是个空
+        if(bmp==null){
+        }
+        imageSize[1]=options.outHeight;
+        imageSize[0]= options.outWidth;
+        System.out.println("options.outWidth:"+options.outWidth);
+        return imageSize;
+    }
 }

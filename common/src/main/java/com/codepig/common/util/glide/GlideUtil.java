@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.Priority;
 import com.bumptech.glide.RequestBuilder;
+import com.bumptech.glide.load.engine.DiskCacheStrategy;
 import com.bumptech.glide.request.RequestOptions;
 import com.codepig.common.R;
 
@@ -23,8 +24,16 @@ public class GlideUtil {
     public final static int centerCrop = 101;
     public final static int fitCenter = 102;
     public final static int centerInside = 103;
+    private static boolean enableCache=false;
+    private static DiskCacheStrategy cacheType=DiskCacheStrategy.ALL;
 
     public static void load(ImageView view, String url) {
+        load(view, url, null, null, false, 0, centerCrop);
+    }
+
+    public static void load(ImageView view, String url,boolean _enableCache,DiskCacheStrategy _cacheType) {
+        enableCache=_enableCache;
+        cacheType=_cacheType;
         load(view, url, null, null, false, 0, centerCrop);
     }
 
@@ -112,6 +121,10 @@ public class GlideUtil {
                     }
                 }
             }
+
+            //Glide缓存设置
+//            requestOptions.skipMemoryCache(enableCache);//默认启用内存缓存
+            requestOptions.diskCacheStrategy(cacheType);//默认值是RESULT:只缓存处理图(RESULT)
 
             requestBuilder.apply(requestOptions).into(view);
         } catch (Exception e) {

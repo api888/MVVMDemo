@@ -38,6 +38,7 @@
     <color name="app_color_gallery">#01ceb0</color>
 
     <color name="gray_box">#535353</color>
+    <color name="gray_menu">#CFF5F1</color>
 
 <!--    按钮-->
     <color name="gray_btn">#EEEEEE</color>
@@ -58,9 +59,12 @@
 <!--    menu-->#11CBB8
     <color name="menu_selected">#434343</color>
     <color name="menu_unselected">#E5E5E5</color>
+    <color name="video_cate_selected">#11CBB8</color>
+    <color name="video_cate_unselected">#ffffff</color>
     <color name="evo_menu_selected">#11CBB8</color>
     <color name="evo_menu_unselected">#E5E5E5</color>
 
 <!--    进度条-->
     <color name="press_green">#26D4CC</color>
+    <color name="tab_layout_green">#347FAE</color>
 </resources>

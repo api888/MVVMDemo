@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="utf-8"?>
+<layout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools">
+
+    <data>
+        <import type="android.view.View" />
+        <variable
+            name="data"
+            type="com.everyone.net.bean.VideoOrderBean">
+        </variable>
+    </data>
+
+    <LinearLayout
+        android:orientation="horizontal"
+        android:background="@color/white"
+        android:gravity="center_vertical"
+        android:padding="15dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <EditText
+            android:id="@+id/edit_text"
+            android:gravity="top"
+            android:background="@null"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:textColor="@color/text_dark"
+            android:textColorHint="@color/text_gray"
+            android:hint="请输入信息……"
+            android:textSize="13sp" />
+        <TextView
+            android:text="发送"
+            android:visibility="invisible"
+            tools:visibility="visible"
+            android:layout_marginLeft="4dp"
+            android:id="@+id/sendBtn"
+            android:textColor="@color/white"
+            android:textSize="12dp"
+            android:gravity="center"
+            android:background="@drawable/round_button_green"
+            android:layout_width="50dp"
+            android:layout_height="30dp"/>
+    </LinearLayout>
+
+</layout>

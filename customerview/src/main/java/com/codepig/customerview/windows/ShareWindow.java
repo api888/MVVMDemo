@@ -8,6 +8,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.support.v7.app.AlertDialog;
 import android.text.TextUtils;
+import android.util.TypedValue;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewTreeObserver;
@@ -19,6 +20,9 @@ import com.codepig.common.net.HttpUtils;
 import com.codepig.common.net.RxRequest;
 import com.codepig.common.net.ServiceCallback;
 import com.codepig.common.net.ThreadPoolUtils;
+import com.codepig.common.rxbus.EventInfo;
+import com.codepig.common.rxbus.RxBus;
+import com.codepig.common.rxbus.RxEvent;
 import com.codepig.common.util.DensityUtil;
 import com.codepig.common.util.MediaUtil;
 import com.codepig.common.util.ScreenShotUtils;
@@ -45,6 +49,7 @@ import io.reactivex.disposables.CompositeDisposable;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
 import static android.view.ViewGroup.LayoutParams.WRAP_CONTENT;
+import static com.codepig.common.config.BaseConfig.MY_HOST;
 
 /**
  * 视频分享
@@ -65,6 +70,9 @@ public class ShareWindow extends PopupWindow {
 
     private String target;//1:视频;2:话题;3:社群
     private String target_id;
+
+    private int retryCount=0;
+    private int maxRetryTime=5;
 
     /**
      * 没有图片版
@@ -124,7 +132,10 @@ public class ShareWindow extends PopupWindow {
         GlideUtil.load(binding.userHead, userInfo.getAvatars());
         binding.userName.setText(userInfo.getNick_name());
         binding.promotionCode.setText("邀请码："+userInfo.getPromotion_code());
-        String contentEtString="api.myhost.com/api/v1/promotion_code/"+userInfo.getPromotion_code();
+        String contentEtString="http://www.dajiaunion.com/download/";
+//        String contentEtString=userInfo.getPromotion_code();
+//        String contentEtString="api."+MY_HOST+"/api/v1/promotion_code/"+userInfo.getPromotion_code();
+        //创建二维码
         Bitmap qrBitmap = CodeCreator.createQRCode(contentEtString, 400,400, null);
         binding.qrCodeImage.setImageBitmap(qrBitmap);
         if(videoInfoBean!=null) {
@@ -140,6 +151,7 @@ public class ShareWindow extends PopupWindow {
 
     private void setListener() {
         binding.closeBtn.setOnClickListener(v -> dismiss());
+        binding.getRoot().setOnClickListener(v -> dismiss());
         binding.unSubBtn.setOnClickListener(v -> listener.onSendSub());
         binding.subBtn.setOnClickListener(v -> listener.onSendSub());
         binding.payBtn.setOnClickListener(v -> listener.onPay());
@@ -286,12 +298,24 @@ public class ShareWindow extends PopupWindow {
     public void setvInfo(VideoInfoBean vInfo) {
         this.vInfo = vInfo;
         binding.setData(vInfo);
-        if(vInfo.isTo_subscribe()){
+        String _tempHeat=vInfo.getVideo_heat()+"";
+        //自适应字体大小
+        int sLength=_tempHeat.length();
+        if(sLength>5) {
+            int textSize = 28 - 6 * (sLength - 5);
+            binding.videoHeatTV.setTextSize(TypedValue.COMPLEX_UNIT_DIP, textSize);
+        }
+        if(vInfo.getAuthor_id().equals(UserConfig.getUserId())){
             binding.subBtn.setVisibility(View.GONE);
-            binding.unSubBtn.setVisibility(View.VISIBLE);
-        }else{
-            binding.subBtn.setVisibility(View.VISIBLE);
             binding.unSubBtn.setVisibility(View.GONE);
+        }else {
+            if (vInfo.isTo_subscribe()) {
+                binding.subBtn.setVisibility(View.GONE);
+                binding.unSubBtn.setVisibility(View.VISIBLE);
+            } else {
+                binding.subBtn.setVisibility(View.VISIBLE);
+                binding.unSubBtn.setVisibility(View.GONE);
+            }
         }
     }
 
@@ -318,8 +342,27 @@ public class ShareWindow extends PopupWindow {
                     public void onSuccess(BaseData<ShareBean> data) {
                         if(data.getRespCode().equals("0")){
                             System.out.println("share count:"+data.getData().getTotal_share());
+                            switch (target){
+                                case "1":
+                                    RxBus.getInstance().send(RxEvent.VideoEvent.VIDEO_SHARED, null);
+                                    break;
+                                case "2":
+                                    //话题
+                                    break;
+                                case "3":
+                                    //社群
+                                    break;
+                                case "4":
+                                    //个人主页
+                                    break;
+                            }
                         }else{
-                            ToastUtil.showToast(data.getRespMsg(),true);
+                            if(retryCount<maxRetryTime){
+                                retryCount++;
+                                shareCount();
+                            }else {
+                                ToastUtil.showToast(data.getRespMsg(), true);
+                            }
                         }
                     }
 

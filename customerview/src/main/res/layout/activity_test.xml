@@ -16,6 +16,8 @@
                 android:layout_height="wrap_content"/>
             <EditText
                 android:id="@+id/hostText"
+                android:hint="http://139.199.23.162:8888"
+                android:text="http://139.199.23.162:8888"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"/>
             <TextView

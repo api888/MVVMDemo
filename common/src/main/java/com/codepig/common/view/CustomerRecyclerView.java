@@ -6,7 +6,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.support.v7.widget.SimpleItemAnimator;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.Gravity;
@@ -22,7 +21,7 @@ import com.codepig.common.base.BaseQuickAdapter;
 import com.codepig.common.view.loadmore.MultiSwipeRefreshLayout;
 
 /**
- * 自定义RecyclerView集成下拉刷新和上拉加载
+ * 自定义RecyclerView集成google下拉刷新和上拉加载
  */
 
 public class CustomerRecyclerView extends LinearLayout implements BaseQuickAdapter.RequestLoadMoreListener, SwipeRefreshLayout.OnRefreshListener {

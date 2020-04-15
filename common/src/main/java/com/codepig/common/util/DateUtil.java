@@ -71,6 +71,16 @@ public class DateUtil {
     }
 
     /**
+     * 获取当前日
+     * @return
+     */
+    public static int getDayByTimeStamp(long timeStamp){
+        String date = ms2Date(timeStamp);
+        String day = date.substring(8, 10);
+        return Integer.parseInt(day);
+    }
+
+    /**
      * 按格式输出当前年月日
      * @return
      */
@@ -139,12 +149,14 @@ public class DateUtil {
 //            return "";
         }
         else{
-            timeLong = timeLong/1000/ 60 / 60 / 24;
-            if(timeLong==1){
-                return "昨天";
-            }else {
-                return timeLong + "天前";
-            }
+//            timeLong = timeLong/1000/ 60 / 60 / 24;
+//            if(timeLong==1){
+//                return "昨天";
+//            }else {
+//                return timeLong + "天前";
+//            }
+            SimpleDateFormat format = new SimpleDateFormat("MM月dd日", Locale.getDefault());
+            return format.format(startDate);
         }
 //        else if ((timeLong/1000/60/60/24)<30){
 //            timeLong = timeLong/1000/ 60 / 60 / 24/7;
@@ -196,5 +208,18 @@ public class DateUtil {
         }catch (Exception e){
         }
         return null;
+    }
+
+    /**
+     * 秒转换为0"0'格式
+     */
+    public static String getTimeString(long _time){
+        String timeString="";
+        if(_time<60){
+            timeString=_time+"\'";
+        }else{
+            timeString=_time/60+"\""+_time%60+"\'";
+        }
+        return timeString;
     }
 }

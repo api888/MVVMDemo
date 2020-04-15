@@ -15,7 +15,7 @@ public final class SimpleLoadMoreView extends LoadMoreView {
 
     @Override
     protected int getLoadingViewId() {
-        return R.id.load_more_loading_view;
+        return R.id.load_more_loading_view;//加载更多动画布局
     }
 
     @Override

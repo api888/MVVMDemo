@@ -1,5 +1,7 @@
 package com.codepig.common.config;
 
+import android.content.Context;
+
 /**
  * 设备相关基础设置
  */
@@ -17,6 +19,8 @@ public class DeviceConfig {
     private static String device_num;
     private static String device_token;
 
+    private static Context context;
+
     public static String getDevice_num() {
         return device_num;
     }
@@ -31,5 +35,13 @@ public class DeviceConfig {
 
     public static void setDevice_token(String device_token) {
         DeviceConfig.device_token = device_token;
+    }
+
+    public static void setContext(Context context) {
+        DeviceConfig.context = context;
+    }
+
+    public static Context getContext() {
+        return context;
     }
 }

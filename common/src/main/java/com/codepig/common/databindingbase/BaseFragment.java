@@ -22,6 +22,7 @@ import com.codepig.common.util.KeyBoardUtil;
 import com.codepig.common.util.StringUtil;
 import com.codepig.common.util.ToastUtil;
 import com.codepig.common.view.LoadingDialog.LoadingDialog;
+import com.codepig.common.view.PointOnlyLoadingDialog;
 import com.codepig.common.view.TextOnlyLoadingDialog;
 import com.codepig.common.viewmodel.BaseVM;
 
@@ -44,6 +45,7 @@ public abstract class BaseFragment extends Fragment implements BaseCB {
     protected ViewDataBinding baseBinding;
 
     protected TextOnlyLoadingDialog dialog;
+    protected PointOnlyLoadingDialog dialogP;
 
     @Nullable
     @Override
@@ -149,11 +151,17 @@ public abstract class BaseFragment extends Fragment implements BaseCB {
     @Override
     public void showLoaddingDialog() {
 //        LoadingDialog.show(getActivity(), R.string.wait);
-        TextOnlyLoadingDialog.Builder builder=new TextOnlyLoadingDialog.Builder(getActivity())
-                .setMessage("请等待...")
-                .setCancelable(false);
-        dialog=builder.create();
-        dialog.show();
+//        TextOnlyLoadingDialog.Builder builder=new TextOnlyLoadingDialog.Builder(getActivity())
+//                .setMessage("请等待...")
+//                .setCancelable(false);
+//        dialog=builder.create();
+//        dialog.show();
+
+        PointOnlyLoadingDialog.Builder builder=new PointOnlyLoadingDialog.Builder(getActivity())
+                .setCancelable(false)
+                .setCancelOutside(true);
+        dialogP=builder.create();
+        dialogP.show();
     }
 
     @Override
@@ -179,7 +187,12 @@ public abstract class BaseFragment extends Fragment implements BaseCB {
     @Override
     public void dismissLoaddingDialog() {
 //        LoadingDialog.dismiss();
-        dialog.dismiss();
+        if(dialog!=null) {
+            dialog.dismiss();
+        }
+        if(dialogP!=null){
+            dialogP.dismiss();
+        }
     }
 
     @Override

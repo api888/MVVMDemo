@@ -14,8 +14,6 @@ public class PreferenceConfig {
     public static final String USER_INFO = "user_info"; //用户信息
     public static final String IDENTIFY = "identify"; //是否已实名
     public static final String ISEXAMINE = "is_examine"; //是否已审核
-
-    public static final String INDEX_BANNER = "index_banner";//首页广告
-    public static final String HOUSE_INDEX = "house_index";//首页--建材家具
-    public static final String HOUSE_BANNER = "house_banner";//首页广告
+    public static final String ID_ALERT_TIMEMARK = "id_alert_time_mark"; //上次提示实名认证的时间戳
+    public static final String CHAT_READ_ID = "chat_id_read"; //聊天消息已读列表
 }

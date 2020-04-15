@@ -44,6 +44,7 @@ public class VideoCompressAsyncTask2 extends AsyncTask<String, String, String> {
             f.delete();
         }
         //码率比预设小的不压缩
+//        System.out.println("MediaUtil.getBitrate(paths[0]):"+MediaUtil.getBitrate(paths[0]));
         if(Long.parseLong(MediaUtil.getBitrate(paths[0]))>6400000) {
             try {
                 VideoProcessor.processor(mContext)
@@ -56,7 +57,7 @@ public class VideoCompressAsyncTask2 extends AsyncTask<String, String, String> {
 //                    .progressListener(listener)      //可输出视频处理进度
                         .process();
             } catch (Exception e) {
-                e.printStackTrace();
+                System.out.println("compress error:"+e.toString());
             }
             if(type== PREV){
                 return paths[1] + "/" + "compressPrev.mp4";

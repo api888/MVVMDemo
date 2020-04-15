@@ -5,6 +5,7 @@
             <enum name="roundtop" value="1"/>
             <enum name="roundbottom" value="2"/>
             <enum name="roundall" value="3"/>
+            <enum name="round" value="0"/>
         </attr>
         <attr name="roundRadius" format="dimension|float" />
     </declare-styleable>

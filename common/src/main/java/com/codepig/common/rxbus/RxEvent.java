@@ -55,6 +55,12 @@ public class RxEvent {
         public static final int UPDATA_SUB = VALUE + 14;
         public static final int VIP_PAY_FINISH = VALUE + 15;
         public static final int NEW_APK_DOWNLOADED = VALUE + 16;
+        public static final int SHOW_SET_ID_ALERT = VALUE + 17;
+        public static final int EVO_MISSION_COMPLETE = VALUE + 18;
+        public static final int USER_SUB_CHANGED = VALUE + 19;
+        public static final int CLEAR_TASK = VALUE + 20;
+        public static final int TOAST_FROM_TASK = VALUE + 21;
+        public static final int UPDATA_NEWS_HOME = VALUE + 22;
 
         public MainEvent() {
             super(VALUE);
@@ -106,11 +112,30 @@ public class RxEvent {
         public static final int CUT_FEATURE = VALUE + 4;
         public static final int UPLOAD_PROGRESS = VALUE + 5;
         public static final int CUT_TOPIC = VALUE + 6;
+        public static final int VIDEO_SHARED = VALUE + 7;
+        public static final int OPEN_FEATURE_VIDEO = VALUE + 8;
+        public static final int ADD_TO_VIDEO_LIST = VALUE + 9;
     }
 
     public static class ChatEvent extends RxEvent {
         public static final int VALUE = 600;
         public static final int GOT_MESSAGE = VALUE + 1;
+        public static final int CHAT_SEND_TEXT = VALUE + 2;
+        public static final int CHAT_SEND_PIC = VALUE + 3;
+        public static final int CHAT_SEND_VOICE = VALUE + 4;
+    }
+
+    public static class SearchEvent extends RxEvent {
+        public static final int VALUE = 700;
+        public static final int GO_SEARCH = VALUE + 1;
+        public static final int GOT_SEARCH = VALUE + 2;
+    }
+
+    public static class CacheEvent extends RxEvent {
+        public static final int VALUE = 800;
+        public static final int GET_CACHE_INFO = VALUE + 1;
+        public static final int GET_CACHE_INFO_WITH_POSITION = VALUE + 2;
+//        public static final int GET_CACHE_INFO_WITH_POSITION = VALUE + 4;
     }
 
     public int getType() {

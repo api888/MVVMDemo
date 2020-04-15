@@ -12,6 +12,7 @@ import com.codepig.common.R;
 /**
  * @author huscarter@163.com
  * @title 图片封装类
+ * 使用clipPath方法显示圆形图片，该方法圆形图片会有锯齿
  * @description 项目里所有用到的ImageView都必须实用此类，方便第三方图片库更换
  * @date 11/19/17
  */

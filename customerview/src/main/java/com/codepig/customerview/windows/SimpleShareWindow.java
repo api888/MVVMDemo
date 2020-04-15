@@ -14,6 +14,8 @@ import com.codepig.common.bean.BaseData;
 import com.codepig.common.net.HttpUtils;
 import com.codepig.common.net.RxRequest;
 import com.codepig.common.net.ServiceCallback;
+import com.codepig.common.rxbus.RxBus;
+import com.codepig.common.rxbus.RxEvent;
 import com.codepig.common.util.DensityUtil;
 import com.codepig.common.util.MediaUtil;
 import com.codepig.common.util.ScreenShotUtils;
@@ -38,6 +40,7 @@ import java.util.Map;
 import io.reactivex.disposables.CompositeDisposable;
 
 import static android.view.ViewGroup.LayoutParams.MATCH_PARENT;
+import static com.codepig.common.config.BaseConfig.MY_HOST;
 
 /**
  * 简易分享window
@@ -57,6 +60,11 @@ public class SimpleShareWindow extends PopupWindow {
 
     private String target;//1:视频;2:话题;3:社群
     private String target_id;
+
+    private boolean promotionCode;
+
+    private int retryCount=0;
+    private int maxRetryTime=5;
 
     public SimpleShareWindow(final Context context, SimpleShareWindowListener shareWindowListener) {
         this.context=context;
@@ -81,6 +89,24 @@ public class SimpleShareWindow extends PopupWindow {
         init(withPageShot);
     }
 
+    /**
+     * 邀请码分享
+     * @param context
+     * @param shareWindowListener
+     */
+    public SimpleShareWindow(final Context context, SimpleShareWindowListener shareWindowListener, Bitmap _bitmap,boolean withPageShot,String _target,String _target_id,boolean promotionCode) {
+        this.context=context;
+        target=_target;
+        target_id=_target_id;
+        bitmap=_bitmap;
+        this.listener = shareWindowListener;
+        binding = DataBindingUtil.inflate(LayoutInflater.from(context), R.layout.window_simple_share, null, false);
+
+        this.promotionCode=promotionCode;
+
+        init(withPageShot);
+    }
+
     private void init(boolean withPageShot){
         setContentView(binding.getRoot());
         setWidth(MATCH_PARENT);
@@ -97,7 +123,13 @@ public class SimpleShareWindow extends PopupWindow {
                 GlideUtil.load(binding.userHead, userInfo.getAvatars());
                 binding.userName.setText(userInfo.getNick_name());
                 binding.promotionCode.setText("邀请码：" + userInfo.getPromotion_code());
-                String contentEtString = "api.myhost.com/api/v1/promotion_code/" + userInfo.getPromotion_code();
+                String contentEtString;
+                if(promotionCode) {
+                    contentEtString = userInfo.getPromotion_code();
+                }else{
+                    contentEtString = "http://www.dajiaunion.com/download/";
+                }
+//                String contentEtString = "api."+MY_HOST+"/api/v1/promotion_code/" + userInfo.getPromotion_code();
                 Bitmap qrBitmap = CodeCreator.createQRCode(contentEtString, 400, 400, null);
                 binding.qrCodeImage.setImageBitmap(qrBitmap);
                 if (bitmap != null) {
@@ -117,6 +149,7 @@ public class SimpleShareWindow extends PopupWindow {
 
     private void setListener() {
         binding.closeBtn.setOnClickListener(v -> dismiss());
+        binding.getRoot().setOnClickListener(v -> dismiss());
         binding.shareTimeLineBtn.setOnClickListener(v -> saveImageAndShare(0));
         binding.shareWeChatBtn.setOnClickListener(v -> saveImageAndShare(1));
         binding.shareWeiboBtn.setOnClickListener(v -> saveImageAndShare(2));
@@ -261,8 +294,27 @@ public class SimpleShareWindow extends PopupWindow {
                     public void onSuccess(BaseData<ShareBean> data) {
                         if(data.getRespCode().equals("0")){
                             System.out.println("share count:"+data.getData().getTotal_share());
+                            switch (target){
+                                case "1":
+                                    RxBus.getInstance().send(RxEvent.VideoEvent.VIDEO_SHARED, null);
+                                    break;
+                                case "2":
+                                    //话题
+                                    break;
+                                case "3":
+                                    //社群
+                                    break;
+                                case "4":
+                                    //个人主页
+                                    break;
+                            }
                         }else{
-                            ToastUtil.showToast(data.getRespMsg(),true);
+                            if(retryCount<maxRetryTime){
+                                retryCount++;
+                                shareCount();
+                            }else {
+                                ToastUtil.showToast(data.getRespMsg(), true);
+                            }
                         }
                     }
 

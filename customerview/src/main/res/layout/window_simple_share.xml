@@ -75,7 +75,7 @@
                     android:layout_marginTop="126dp"
                     android:layout_width="240dp"
                     android:layout_height="270dp"/>
-                <com.codepig.common.view.GlideImageView
+                <com.codepig.common.view.CircleImageView
                     android:layout_below="@+id/pageShot"
                     android:layout_centerHorizontal="true"
                     android:background="@color/white"
