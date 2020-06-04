@@ -1,6 +1,7 @@
 package com.codepig.common.activity;
 
 import android.content.Context;
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.res.Resources;
 import android.databinding.DataBindingUtil;
@@ -9,27 +10,32 @@ import android.databinding.ViewDataBinding;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.Handler;
+import android.support.annotation.NonNull;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.app.AppCompatActivity;
 import android.transition.TransitionManager;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.ViewTreeObserver;
 import android.view.WindowManager;
 import android.widget.EditText;
 import android.widget.FrameLayout;
 
-import com.bugtags.library.Bugtags;
 import com.codepig.common.R;
 import com.codepig.common.callback.BaseCB;
 import com.codepig.common.util.KeyBoardUtil;
-import com.codepig.common.util.SoftHideKeyBoardUtil;
+import com.codepig.common.util.PermissionCompat;
 import com.codepig.common.util.StringUtil;
 import com.codepig.common.util.ToastUtil;
 import com.codepig.common.view.PointOnlyLoadingDialog;
 import com.codepig.common.view.TextOnlyLoadingDialog;
 import com.codepig.common.viewmodel.BaseVM;
 
+import static com.codepig.common.util.PermissionCompat.REQUEST_CALL_PHONE;
+import static com.codepig.common.util.PermissionCompat.REQUEST_CAMERA;
+import static com.codepig.common.util.PermissionCompat.REQUEST_EXTERNAL_STORAGE;
+import static com.codepig.common.util.PermissionCompat.REQUEST_GALLERY;
+import static com.codepig.common.util.PermissionCompat.REQUEST_RECODE;
 import static com.codepig.common.util.WindowUtil.hasNavBar;
 
 /**
@@ -59,6 +65,9 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCB {
     private boolean BottomStatusHide=false;
     private boolean hideWait=false;
 
+    //权限设置跳转提示框
+    private AlertDialog permissionAlertDialog;
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -79,6 +88,10 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCB {
 //        getWindow().getDecorView().setOnSystemUiVisibilityChangeListener(visibility -> {
 //            setTopBarTranslate(true);
 //        });
+
+        permissionAlertDialog = new AlertDialog.Builder(this).create();
+        permissionAlertDialog.setButton(DialogInterface.BUTTON_POSITIVE,"去开启", alertListener);
+        permissionAlertDialog.setButton(DialogInterface.BUTTON_NEGATIVE,"取消", alertListener);
 
         initAll(savedInstanceState);
 
@@ -186,6 +199,58 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCB {
         return R.color.white;
     }
 
+    public void showPermissionAlert(String msg){
+        permissionAlertDialog.setMessage(msg);
+        permissionAlertDialog.show();
+    }
+
+    public void hidePermissionAlert(){
+        permissionAlertDialog.dismiss();
+    }
+
+    DialogInterface.OnClickListener alertListener = (dialog, which) -> {
+        switch (which) {
+            case DialogInterface.BUTTON_POSITIVE:
+                PermissionCompat.getInstance().goPermissionSet(this);
+                hidePermissionAlert();
+                break;
+            case DialogInterface.BUTTON_NEGATIVE:
+                hidePermissionAlert();
+                break;
+            default:
+                break;
+        }
+    };
+
+    /**
+     * 权限回调
+     * @param requestCode
+     * @param permissions
+     * @param grantResults
+     */
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults){
+        boolean _permission=true;
+        switch (requestCode){
+            case REQUEST_RECODE:
+            case REQUEST_CAMERA:
+            case REQUEST_EXTERNAL_STORAGE:
+            case REQUEST_CALL_PHONE:
+            case REQUEST_GALLERY:
+                for(int i=0;i<grantResults.length;i++){
+                    if(grantResults[i]!=0){
+                        _permission=false;
+                    }
+                }
+                if(_permission){
+                    if(permissionAlertDialog.isShowing()) {
+                        hidePermissionAlert();
+                    }
+                }
+                break;
+        }
+    }
+
     @Override
     protected void onRestart() {
         super.onRestart();
@@ -194,7 +259,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCB {
     @Override
     protected void onResume() {
         super.onResume();
-        Bugtags.onResume(this);
         setTopBarTranslate(true);
     }
 
@@ -202,7 +266,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCB {
     protected void onPause() {
         super.onPause();
         closeKeyBoard();
-        Bugtags.onPause(this);
     }
 
     @Override
@@ -230,7 +293,6 @@ public abstract class BaseActivity extends AppCompatActivity implements BaseCB {
                 KeyBoardUtil.closeKeyWords(BaseActivity.this);
             }
         }
-        Bugtags.onDispatchTouchEvent(this, event);
         return super.dispatchTouchEvent(event);
     }
 
