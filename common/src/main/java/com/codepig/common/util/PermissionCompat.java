@@ -29,7 +29,7 @@ public class PermissionCompat {
     private static PermissionCompat instance;
 
     //自己的项目包名
-    private String packageName="com.everyone";
+    private String packageName="com.myapp";
 
     /**
      * 检测文件的权限
@@ -450,7 +450,7 @@ public class PermissionCompat {
         if (resolveinfo != null) {
             // packageName参数2 = 参数 packname
             String packageName = resolveinfo.activityInfo.packageName;
-            // 这个就是我们要找的该APP的LAUNCHER的Activity[组织形式：packageName参数2.mainActivityName]
+            // 该APP的LAUNCHER的Activity[组织形式：packageName参数2.mainActivityName]
             String className = resolveinfo.activityInfo.name;
             // LAUNCHER Intent
             Intent intent = new Intent(Intent.ACTION_MAIN);
